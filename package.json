@@ -8,6 +8,6 @@
     "check": "node --check mr/mr-core.js && node --check mr/editor-geometry.js && node --check mr/camera-capture.js && npm test"
   },
   "dependencies": {"three":"0.185.1"},
-  "devDependencies": {"jsdom":"^26.1.0"},
+  "devDependencies": {"jsdom":"^30.0.1"},
   "license":"MIT"
 }
