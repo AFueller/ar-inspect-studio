@@ -1,0 +1,15 @@
+config.php
+.env
+.env.*
+uploads/*
+!uploads/.htaccess
+node_modules/
+coverage/
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.zip
+*.tar.gz
+*.bak
+*.sql.gz

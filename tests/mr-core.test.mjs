@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import * as THREE from 'three';import {buildThreePointCalibration,mapOverlayToReferenceRoi,pointInsideCalibratedSurface} from '../mr/mr-core.js';
+test('three point calibration measures rectangular surface',()=>{const pts=[new THREE.Vector3(0,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(0,0,0)];const hit={normal:new THREE.Vector3(0,0,1)};const cal=buildThreePointCalibration(pts,hit,{},new THREE.Vector3(0,0,2));assert.ok(cal);assert.equal(cal.width,2);assert.equal(cal.height,1);});
+test('overlay maps into ROI coordinates',()=>{const o=mapOverlayToReferenceRoi({x:50,y:50,w:20,h:10},{x:50,y:50,w:50,h:50});assert.deepEqual(o,{x:50,y:50,w:40,h:20});});
+test('point bounds are object local',()=>{assert.equal(pointInsideCalibratedSurface({x:.1,y:.1},{width:1,height:1},0),true);assert.equal(pointInsideCalibratedSurface({x:.6,y:0},{width:1,height:1},0),false);});

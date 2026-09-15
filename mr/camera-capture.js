@@ -1,0 +1,6 @@
+export class CameraCapture{
+  constructor(video,media=navigator.mediaDevices){this.video=video;this.media=media;this.stream=null;this.generation=0;}
+  async start(){this.stop();const generation=this.generation;if(!this.media?.getUserMedia)throw Error('Dieser Browser stellt keinen Kamerazugriff bereit.');const stream=await this.media.getUserMedia({audio:false,video:{facingMode:{exact:'environment'},width:{ideal:1920},height:{ideal:1080}}});if(generation!==this.generation){stream.getTracks().forEach(t=>t.stop());return false;}this.stream=stream;this.video.srcObject=stream;try{await this.video.play();}catch(error){this.stop();throw error;}return generation===this.generation&&this.stream===stream;}
+  async capture(){const video=this.video;if(!this.stream||video.readyState<2||!video.videoWidth)throw Error('Noch kein Kamerabild verfügbar.');const canvas=document.createElement('canvas');canvas.width=video.videoWidth;canvas.height=video.videoHeight;canvas.getContext('2d').drawImage(video,0,0);return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('Foto konnte nicht erstellt werden.')),'image/jpeg',.92));}
+  stop(){this.generation++;this.stream?.getTracks().forEach(t=>t.stop());this.stream=null;this.video.srcObject=null;}
+}

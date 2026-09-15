@@ -1,0 +1,3 @@
+export function resizeBounds(fixed,moving,minimum=.018,maximum=8){if(![fixed.x,fixed.y,moving.x,moving.y].every(Number.isFinite))return null;const dx=moving.x-fixed.x,dy=moving.y-fixed.y;if(Math.abs(dx)<minimum||Math.abs(dy)<minimum||Math.abs(dx)>maximum||Math.abs(dy)>maximum)return null;return{x:(fixed.x+moving.x)/2,y:(fixed.y+moving.y)/2,width:Math.abs(dx),height:Math.abs(dy)};}
+export function elementBounds(element,width,height){return{x:(element.x_pct-50)*width/100,y:(50-element.y_pct)*height/100,width:element.w_pct*width/100,height:element.h_pct*height/100};}
+export function boundsToElement(bounds,width,height){return{x_pct:50+bounds.x/width*100,y_pct:50-bounds.y/height*100,w_pct:bounds.width/width*100,h_pct:bounds.height/height*100};}
